@@ -1,0 +1,24 @@
+{
+  "name": "whosaidwhat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickwu241/WhoSaidWhat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nickwu241/WhoSaidWhat/issues"
+  },
+  "homepage": "https://github.com/nickwu241/WhoSaidWhat#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "hbs": "^4.0.1",
+    "node-fetch": "^2.3.0"
+  }
+}
