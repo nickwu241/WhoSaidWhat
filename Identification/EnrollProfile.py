@@ -32,6 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 import IdentificationServiceHttpClientHelper
+import GetSubscriptionKey
 import sys
 
 def enroll_profile(subscription_key, profile_id, file_path, force_short_audio):
@@ -57,10 +58,7 @@ def enroll_profile(subscription_key, profile_id, file_path, force_short_audio):
     print('Enrollment Status = {0}'.format(enrollment_response.get_enrollment_status()))
 
 if __name__ == "__main__":
-    if len(sys.argv) < 5:
-        print('Usage: python EnrollProfile.py <subscription_key> <profile_id> '
-            '<enrollment_file_path>')
-        print('\t<subscription_key> is the subscription key for the service')
+    if len(sys.argv) < 4:
         print('\t<profile_id> is the profile ID of the profile to enroll')
         print('\t<enrollment_file_path> is the enrollment audio file path')
         print('\t<force_short_audio> True/False waives the recommended minimum audio limit needed '
@@ -68,4 +66,6 @@ if __name__ == "__main__":
 
         sys.exit('Error: Incorrect Usage.')
 
-    enroll_profile(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    subscription_key = GetSubscriptionKey.get_subscription_key()
+
+    enroll_profile(subscription_key ,sys.argv[1], sys.argv[2], sys.argv[3])

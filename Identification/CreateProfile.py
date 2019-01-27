@@ -32,6 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 import IdentificationServiceHttpClientHelper
+import GetSubscriptionKey
 import sys
 
 def create_profile(subscription_key, locale):
@@ -49,9 +50,7 @@ def create_profile(subscription_key, locale):
     print('Profile ID = {0}'.format(creation_response.get_profile_id()))
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print('Usage: python CreateProfile.py <subscription_key>')
-        print('\t<subscription_key> is the subscription key for the service')
-        sys.exit('Error: Incorrect Usage.')
 
-    create_profile(sys.argv[1], 'en-us')
+    subscription_key = GetSubscriptionKey.get_subscription_key()
+
+    create_profile(subscription_key, 'en-us')

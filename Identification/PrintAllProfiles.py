@@ -32,6 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 import IdentificationServiceHttpClientHelper
+import GetSubscriptionKey
 import sys
 
 def print_all_profiles(subscription_key):
@@ -58,9 +59,6 @@ def print_all_profiles(subscription_key):
             profile.get_enrollment_status()))
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print('Usage: python PrintAllProfiles.py <subscription_key>')
-        print('\t<subscription_key> is the subscription key for the service')
-        sys.exit('Error: Incorrect Usage.')
+    subscription_key = GetSubscriptionKey.get_subscription_key()
 
-    print_all_profiles(sys.argv[1])
+    print_all_profiles(subscription_key)

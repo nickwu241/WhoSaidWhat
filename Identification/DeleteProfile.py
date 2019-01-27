@@ -32,6 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 import IdentificationServiceHttpClientHelper
+import GetSubscriptionKey
 import sys
 
 
@@ -48,11 +49,12 @@ def delete_profile(subscription_key, profile_id):
 		print('Profile {0} has been successfully deleted.'.format(profile_id))
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print('Usage: python DeleteProfile.py <subscription_key> <profile_id> ')
-        print('\t<subscription_key> is the subscription key for the service')
+    if len(sys.argv) < 2:
+        print('Usage: python DeleteProfile.py <profile_id> ')
         print('\t<profile_id> the ID for a profile to delete from the sevice')
         sys.exit('Error: Incorrect usage.')
 
-    delete_profile(sys.argv[1], sys.argv[2])
+    subscription_key = GetSubscriptionKey.get_subscription_key()
+
+    delete_profile(subscription_key, sys.argv[1])
 
