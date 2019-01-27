@@ -20,6 +20,8 @@ const sampleRateHertz = 16000;
 const languageCode = 'en-US';
 
 const app = express();
+app.use('/assets', express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/static'));
 
 const port = process.env.port || 8080;
 var transcript = [];
@@ -68,20 +70,23 @@ async function transcribe(filename, speakerId) {
     // const [response] = await client.recognize(request);
     client.recognize(request).then(r => {
         const [response] = r
-        console.log(response);
         const transcription = response.results
             .map(result => result.alternatives[0].transcript)
             .join('\n');
         console.log(`Transcription: `, transcription);
+        console.log(transcript)
         if (previousSpeakerName === speakerId) {
             // Keep speech buble.
             transcript[transcript.length - 1][1] += transcription
         } else {
             // Create new speech buble.
-            // if (transcript.length > 0) {
-            //     stdlib_call(previousSpeakerName, transcript[transcript.length - 1]);
-            // }
-            transcript.push([speakerId, transcription])
+            if (transcript.length > 0) {
+                console.log(previousSpeakerName)
+                console.log(transcript)
+                stdlib_call.apply(previousSpeakerName, transcript[transcript.length - 1]);
+            }
+            if (transcription.length > 0)
+                transcript.push([speakerId, transcription])
         }
 
         if (isEnrolling) {
@@ -132,7 +137,7 @@ function getSpeakerId() {
 }
 
 function enroll(name, callback) {
-    enroll_time = 10
+    enroll_time = 15
     console.log("Enrolling... ", name)
     cmd_create = '(prof_id=$(./Identification/CreateProfile.py); ./Identification/EnrollProfile.py ${prof_id} enroll.wav True ' + name + ')'
     cmd_enroll = `sox -b 16 -r 16k -c 1 -d enroll.wav trim 0 ${enroll_time} && ${cmd_create}`
@@ -143,12 +148,17 @@ function enroll(name, callback) {
     });
 }
 
-app.get('/', (req, res) => {
-    res.render('index.hbs', {
-        transcript: transcriptText,
-        name: speakerName
-    });
-});
+// app.get('/', (req, res) => {
+//     res.render('index.hbs', {
+//         transcript: transcriptText,
+//         name: speakerName
+//     });
+// });
+// app.get('/transcript', (req, res) => {
+//     res.json({ transcript: [['Hello', 'World']], currentSpeaker: 'Jimmy' })
+// })
+
+
 
 app.post('/speakerId', (req, res) => {
     getSpeakerId();
@@ -165,7 +175,10 @@ app.post('/create/:name', (req, res) => {
 })
 
 app.get('/transcript', (req, res) => {
-    res.json(transcript);
+    res.json({
+        transcript: transcript,
+        currentSpeaker: speakerName
+    });
 })
 
 app.listen(process.env.PORT || 8080, () => {
