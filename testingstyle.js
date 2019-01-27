@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded ({
 app.use(bodyParser.json())
 
 app.use('/assets', express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/static'));
 
 const port = process.env.port || 8080;
 var tra = '';
@@ -50,7 +51,7 @@ function sendRequest(){
         } else {
             tra += data.title;
         }
-        
+
         if (data.userId == 1){
             url = './assets/mick.jpeg';
             name = 'Mickey Mouse';
@@ -64,33 +65,21 @@ function sendRequest(){
             url = './assets/first.png';
             name = 'Guy 3';
         }
-        
+
         na = '<div id="talker"> \
               <div style="width:300px;height:300px;border-radius:50px; \
               background-image:url('+ url +'); \
               background-position: center; background-size: cover;"></div>'
-              + name + ' is speaking</div> '   
-        
+              + name + ' is speaking</div> '
+
     })
 }
 
-app.get('/', (req, res) => {
-    res.render('index.hbs', {
-        transcript: tra,
-        name: na
-	});
-});
-
-
-app.post('/', (req, res) => {
-    var name = req.body.name;
-    console.log(req.body);
-    res.json({ status: 'ok' });
+app.get('/transcript', (req, res) => {
+    res.json({transcript: [['Hello', 'World']], currentSpeaker: 'Jimmy'})
 })
-
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
-    setInterval(sendRequest, 100)
-    
+    // setInterval(sendRequest, 100)
 });
