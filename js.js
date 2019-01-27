@@ -5,6 +5,8 @@ const express = require('express');
 const fetch = require("node-fetch");
 const { exec } = require('child_process');
 
+
+
 // Import stdlib
 const lib = require('lib');
 
@@ -87,8 +89,12 @@ async function transcribe(filename, speakerId) {
                 console.log(transcript)
                 stdlib_call.apply(previousSpeakerName, transcript[transcript.length - 1]);
             }
-            if (transcription.length > 0)
-                transcript.push([speakerId, transcription])
+            if (transcription.length > 0) {
+                var date = new Date();
+                var timestamp = date.getTime();
+                transcript.push([speakerId, transcription, timestamp])
+            }
+
         }
 
         if (isEnrolling) {
