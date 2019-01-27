@@ -1,0 +1,101 @@
+body {
+    font-family: Georgia;
+}
+
+#all {
+    height: 90vh;
+    width: 99vw;
+    bottom: 0;
+    position: absolute;
+}
+
+.bodies {
+    width: 50%;
+    height: 100%;
+    position: relative;
+}
+
+#first {
+    float: left;
+}
+
+#second {
+    text-align: center;
+    float: right;
+}
+
+#transcriptBox {
+    padding: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    overflow-y: auto;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 43vw;
+    height: 80vh;
+    /*background-color: lightblue;*/
+}
+
+#title {
+    font-size: 4em;
+}
+
+#talker {
+    width: 300px;
+    height:300px;
+    font-size: 3em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.speaker {
+    width: 300px;
+    height:300px;
+    border-radius:50px;
+    background-position: center;
+    background-size: cover;
+}
+
+
+/* Avatars */
+.mickey {
+    background-image: url('./assets/mick.jpeg');
+}
+
+.jimmy {
+    background-image: url('./assets/3.png');
+}
+
+.sorina {
+    background-image: url('./assets/6.png');
+}
+
+/* Speech Bubble Colours */
+.speech {
+    display: inline-block;
+    padding:10px;
+    margin:10px;
+    border-radius:30px;
+    background-color: #ccdbdc;
+}
+
+.Jimmy {
+    background-color: #8e6c88;
+}
+.Sorina {
+    background-color: #63c7b2;
+}
+.Mickey {
+    background-color: #80ced7;
+}
+.Unknown {
+    background-color: #ccdbdc;
+}
+
+#buttonContainer {
+    float:right;
+}

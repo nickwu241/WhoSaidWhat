@@ -19,6 +19,7 @@
   "dependencies": {
     "@google-cloud/speech": "^2.2.0",
     "express": "^4.16.4",
+    "googleapis": "^36.0.0",
     "hbs": "^4.0.1",
     "lib": "^3.0.2",
     "node-fetch": "^2.3.0",

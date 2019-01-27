@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Who Said What</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="title">WhoSaidWhat</div>
+
+        <div id="all">
+            <div class="bodies" id="first">
+                <div v-for="item in transcript">
+                    <!-- TODO: CHANGE COLOUR -->
+                    <div class="speech">
+                        {{ item[0] }}: {{item[1]}}
+                    </div>
+                </div>
+            </div>
+            <div class="bodies" id="second">
+                <div id="talker">
+                    <div :class="speakerClass"></div>
+                    <div v-if="currentSpeaker">
+                        {{currentSpeaker}} is speaking.
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
