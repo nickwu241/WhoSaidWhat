@@ -9,11 +9,22 @@
 </head>
 
 <body>
-    <div id="app">
-        <div id="title">WhoSaidWhat</div>
+    <div id="app" class="container-fluid">
+            <div class="d-flex">
+                    <div id="title">WhoSaidWhat
+                            
+                    </div>
+                    <div class="ml-auto p-2">
+                            <button type="button" class="btn btn-success">Export</button>
+                    </div>
+                    
+                </div>
 
+        
+        
         <div id="all">
             <div class="bodies" id="first">
+
                 <div v-for="item in transcript">
                     <!-- TODO: CHANGE COLOUR -->
                     <div class="speech">
@@ -27,6 +38,7 @@
                     <div v-if="currentSpeaker">
                         {{currentSpeaker}} is speaking.
                     </div>
+                    <button type="button" class="btn btn-primary">Add New User</button>
                 </div>
                 <div style="clear:both"></div>
             </div>
