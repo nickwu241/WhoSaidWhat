@@ -76,7 +76,7 @@ function sendRequest(){
 }
 
 app.get('/transcript', (req, res) => {
-    res.json({transcript: [['Hello', 'World']], currentSpeaker: 'Jimmy'})
+    res.json({transcript: [['Jimmy', 'World']], currentSpeaker: 'Jimmy'})
 })
 
 app.listen(process.env.PORT || 8080, () => {
