@@ -3,12 +3,14 @@ var app = new Vue({
     data: {
         transcript: [],
         currentSpeaker: '',
+        inputText: '',
+        buttonDisabled: false
     },
     computed: {
         speakerClass() {
             return {
                 'speaker': true,
-                'mickey': this.currentSpeaker === 'Mickey',
+                'mickey': this.currentSpeaker === 'MickeyMouse',
                 'jimmy': this.currentSpeaker === 'Jimmy',
                 'sorina': this.currentSpeaker === 'Sorina'
             }
@@ -31,24 +33,39 @@ var app = new Vue({
             fetch('/export', {
                 method: 'POST'
             })
+        },
+        create() {
+            if (this.inputText === '') {
+                return;
+            }
+            this.buttonDisabled = true;
+            fetch(`/create/${this.inputText}`, {
+                method: 'POST'
+            })
+                .then(r => r.json())
+                .then(response => {
+                    this.buttonDisabled = false;
+                    var modal = document.getElementById('myModal');
+                    modal.style.display = "none";
+                });
         }
     },
     mounted() {
         var modal = document.getElementById('myModal');
-        
+
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
 
         var recBtn = document.getElementById("recordButton");
-        
+
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
-        
-        // When the user clicks on the button, open the modal 
+
+        // When the user clicks on the button, open the modal
         btn.onclick = function() {
-          modal.style.display = "block";
+            modal.style.display = "block";
         }
-        
+
         recBtn.onclick = function() {
             recBtn.disabled = true;
         }
@@ -56,7 +73,7 @@ var app = new Vue({
         span.onclick = function() {
           modal.style.display = "none";
         }
-        
+
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
           if (event.target == modal) {
