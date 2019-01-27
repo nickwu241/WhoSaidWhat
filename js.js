@@ -5,6 +5,9 @@ const express = require('express');
 const fetch = require("node-fetch");
 const { exec } = require('child_process');
 
+// Import stdlib
+const lib = require('lib');
+
 // Imports the Google Cloud client library
 const speech = require('@google-cloud/speech');
 
@@ -23,6 +26,16 @@ var transcript = '';
 var speakerName = 'No one';
 var previousSpeakerName = '';
 var globalId = 0;
+
+function stdlib_call(speakerName, text) {
+    lib['nickwu241.who-said-what'](speakerName, text, (err, res) => {
+        if (err) {
+            console.error('stdlib function call error:', err);
+        } else {
+            console.log('stdlib function call succeeded');
+        }
+    });
+}
 
 function sendRequest() {
     fetch('https://jsonplaceholder.typicode.com/todos/')
@@ -64,6 +77,7 @@ async function transcribe(filename, speakerId) {
         } else {
             // Create new speech buble.
             transcript += transcription;
+            stdlib_call(previousSpeakerName, transcription);
         }
         speakerName = speakerId;
         previousSpeakerName = speakerId;
