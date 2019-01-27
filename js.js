@@ -103,6 +103,16 @@ function getSpeakerId() {
     exec_commands(cmd_record, cmd_identify);
 }
 
+function enroll(name) {
+    console.log("Enrolling... ", name)
+    cmd_create = '(prof_id=$(./Identification/CreateProfile.py); ./Identification/EnrollProfile.py ${prof_id} enroll.wav True ' + name
+    cmd_enroll = `sox -b 16 -r 16k -c 1 -d enroll.wav trim 0 10 && ${cmd_create}`
+    exec(cmd_enroll, (err, stdout, stderr) => {
+        console.log(`stdout: ${stdout}`);
+        console.log(`stderr: ${stderr}`);
+    });
+}
+
 app.get('/', (req, res) => {
     res.render('index.hbs', {
         transcript: transcript,
@@ -115,8 +125,13 @@ app.post('/speakerId', (req, res) => {
     res.json({ status: 'ok' });
 })
 
+app.post('/create/:name', (req, res) => {
+    enroll(req.params.name);
+    res.json({ status: 'ok' })
+})
+
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
     // setInterval(getSpeakerId, 10000)
-    getSpeakerId();
+    // getSpeakerId();
 });
