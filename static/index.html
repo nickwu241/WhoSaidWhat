@@ -24,10 +24,7 @@
                 <div v-for="item in transcript">
                     <!-- TODO: CHANGE COLOUR -->
                     <div class="speech">
-                        {{ item[0] }}: {{item[1]}}
-                        <div class="timestamp">
-                            {{ item[2] }}
-                        </div>
+                        {{ item[0] }}: {{item[1]}} {{ item[2] }}
                     </div>
                 </div>
             </div>
@@ -37,7 +34,7 @@
                     <div v-if="currentSpeaker">
                         {{currentSpeaker}} is speaking.
                     </div>
-                    <button type="button" class="btn btn-primary" id="myBtn" >Add New User</button>
+                    <button type="button" class="btn btn-primary" id="myBtn">Add New User</button>
                 </div>
                 <div style="clear:both"></div>
             </div>
@@ -47,7 +44,8 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <input class="m-2" v-model.trim="inputText" placeholder="Speaker Name">
-                    <button type="button" class="m-2 btn btn-primary" id="recordButton" @click="this.create">Start Recording</button>
+                    <button type="button" class="m-2 btn btn-primary" id="recordButton" @click="this.create">Start
+                        Recording</button>
                 </div>
             </div>
         </div>

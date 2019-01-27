@@ -16,7 +16,7 @@ const speech = require('@google-cloud/speech');
 // Creates a client
 const client = new speech.SpeechClient();
 
-const sheets = require('sheets.js');
+const sheets = require('./sheets.js');
 
 // const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
 const encoding = 'LINEAR16';
@@ -32,6 +32,7 @@ var transcript = [];
 var transcriptText = '';
 var speakerName = 'No one';
 var previousSpeakerName = '';
+var previousTranscription = '';
 var globalId = 0;
 var isEnrolling = false;
 
@@ -55,7 +56,7 @@ function sendRequest() {
         })
 }
 
-async function transcribe(filename, speakerId) {
+function transcribe(filename, speakerId) {
     const config = {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
@@ -78,20 +79,23 @@ async function transcribe(filename, speakerId) {
             .map(result => result.alternatives[0].transcript)
             .join('\n');
         console.log(`Transcription: `, transcription);
-        console.log(transcript)
+        // console.log(transcript)
         if (previousSpeakerName === speakerId) {
             // Keep speech buble.
-            transcript[transcript.length - 1][1] += transcription
+            transcript[transcript.length - 1][1] += transcription + " "
         } else {
             // Create new speech buble.
             if (transcript.length > 0) {
-                console.log(previousSpeakerName)
-                console.log(transcript)
-                stdlib_call.apply(previousSpeakerName, transcript[transcript.length - 1]);
+                // console.log(previousSpeakerName)
+                // console.log(transcript)
+                // TODO: This is hacky, fix later
+                if (previousTranscription != transcription)
+                    stdlib_call.apply(previousSpeakerName, transcript[transcript.length - 1]);
             }
             if (transcription.length > 0) {
                 var date = new Date();
-                var timestamp = date.getTime();
+                var timestamp = date.toTimeString().split(' ')[0]
+                console.log(timestamp)
                 transcript.push([speakerId, transcription, timestamp])
             }
 
@@ -104,7 +108,9 @@ async function transcribe(filename, speakerId) {
         transcriptText += transcription;
         speakerName = speakerId;
         previousSpeakerName = speakerId;
-    });
+        previousTranscription = transcription;
+    }).catch(err =>
+        console.error(err))
 }
 
 function exec_commands(cmd_record, cmd_identify) {
@@ -135,7 +141,7 @@ function exec_commands(cmd_record, cmd_identify) {
 }
 
 function getSpeakerId() {
-    enroll_time = 3
+    enroll_time = 4
     console.log("listening to user voice")
     filename = `output_${globalId}.wav`
     globalId++
