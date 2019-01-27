@@ -26,6 +26,11 @@ var app = new Vue({
                 this.transcript = res['transcript'];
                 this.currentSpeaker = res['currentSpeaker'];
             }).catch(err => console.error(err));
+        },
+        export() {
+            fetch('/export', {
+                method: 'POST'
+            })
         }
     },
     mounted() {

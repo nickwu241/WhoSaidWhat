@@ -14,6 +14,8 @@ const speech = require('@google-cloud/speech');
 // Creates a client
 const client = new speech.SpeechClient();
 
+const sheets = require('sheets.js');
+
 // const filename = 'Local path to audio file, e.g. /path/to/audio.raw';
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
@@ -180,6 +182,11 @@ app.get('/transcript', (req, res) => {
         currentSpeaker: speakerName
     });
 })
+
+app.post('/export', (req, res) => {
+    sheets.writeToSheets(transcript);
+    res.json({ statis: 'ok' });
+});
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
