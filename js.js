@@ -50,33 +50,35 @@ async function transcribe(filename, speakerId) {
     };
 
     // Detects speech in the audio file
-    const [response] = await client.recognize(request);
-    const transcription = response.results
-        .map(result => result.alternatives[0].transcript)
-        .join('\n');
-    console.log(`Transcription: `, transcription);
-    if (previousSpeakerName === speakerId) {
-        // Keep speech buble.
-    } else {
-        // Create new speech buble.
-        transcript += transcription;
-    }
-    speakerName = speakerId;
-    previousSpeakerName = speakerId;
+    // const [response] = await client.recognize(request);
+    client.recognize(request).then(r => {
+        const [response] = r
+        console.log(response);
+        const transcription = response.results
+            .map(result => result.alternatives[0].transcript)
+            .join('\n');
+        console.log(`Transcription: `, transcription);
+        if (previousSpeakerName === speakerId) {
+            // Keep speech buble.
+            transcript += transcription;
+        } else {
+            // Create new speech buble.
+            transcript += transcription;
+        }
+        speakerName = speakerId;
+        previousSpeakerName = speakerId;
+    });
 }
 
-function getSpeakerId() {
-    console.log("listening to user voice")
-    filename = 'output_test.wav'
-    cmd_record = `sox -b 16 -r 16k -c 1 -d ${filename} trim 0 4`
-    cmd_identify = `./Identification/IdentifyFile.py ${filename} True 03f5cadf-309f-4228-8390-05007eb83ece 5d545b81-a3d9-4ea7-be55-aba94c7c1a05 cd74bc8f-71c5-46cf-82d6-9f3f30dadc30 157e954b-6fe7-4d96-a9ac-f1135521e9fa`
-
+function exec_commands(cmd_record, cmd_identify) {
     exec(cmd_record, (err, stdout, stderr) => {
         if (err) {
             console.error('couldnt execute command', err);
             throw err;
         }
 
+        getSpeakerId();
+        console.log('identity command', cmd_identify);
         exec(cmd_identify, (err1, stdout1, stderr1) => {
             if (err1) {
                 console.error('couldnt execute command', err1);
@@ -88,9 +90,17 @@ function getSpeakerId() {
             var speakerId = lines[0].split('=')[1].trim()
             var confidence = lines[1].split('=')[1].trim()
             transcribe(filename, speakerId);
-            getSpeakerId();
         });
-    });
+    })
+}
+
+function getSpeakerId() {
+    console.log("listening to user voice")
+    filename = `output_${globalId}.wav`
+    globalId++
+    cmd_record = `sox -b 16 -r 16k -c 1 -d ${filename} trim 0 6`
+    cmd_identify = `./Identification/IdentifyFile.py ${filename} True 03f5cadf-309f-4228-8390-05007eb83ece 5d545b81-a3d9-4ea7-be55-aba94c7c1a05 cd74bc8f-71c5-46cf-82d6-9f3f30dadc30 157e954b-6fe7-4d96-a9ac-f1135521e9fa`
+    exec_commands(cmd_record, cmd_identify);
 }
 
 app.get('/', (req, res) => {
