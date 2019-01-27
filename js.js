@@ -83,7 +83,13 @@ function transcribe(filename, speakerId) {
         // console.log(transcript)
         if (previousSpeakerName === speakerId) {
             // Keep speech buble.
-            transcript[transcript.length - 1][1] += transcription + " "
+            console.log(transcript[transcript.length - 1])
+
+            if (transcript[transcript.length - 1] === undefined) {
+                transcript.push([speakerId, transcription, timestamp])
+            } else {
+                transcript[transcript.length - 1][1] += transcription + " "
+            }
         } else {
             // Create new speech buble.
             if (transcript.length > 0) {
@@ -102,8 +108,8 @@ function transcribe(filename, speakerId) {
 
         }
 
-        if (transcription.contains('unlock') && speakerId === 'Jimmy') {
-            sms();
+        if (transcription.includes('unlock') && speakerId === 'Jimmy') {
+            sendText();
         }
 
         if (isEnrolling) {
@@ -167,9 +173,10 @@ function enroll(name, callback) {
     });
 }
 
-function sms() {
+function sendText() {
     var number = '7783165948';
     var text = 'Door unlocked.';
+    console.log("texting...")
     sms({
         to: number, // (required)
         body: text // (required)
