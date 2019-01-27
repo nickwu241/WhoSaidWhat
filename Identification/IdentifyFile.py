@@ -32,6 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
 import IdentificationServiceHttpClientHelper
+import GetSubscriptionKey
 import sys
 
 def identify_file(subscription_key, file_path, force_short_audio, profile_ids):
@@ -54,14 +55,16 @@ def identify_file(subscription_key, file_path, force_short_audio, profile_ids):
     print('Confidence = {0}'.format(identification_response.get_confidence()))
 
 if __name__ == "__main__":
-    if len(sys.argv) < 5:
-        print('Usage: python IdentifyFile.py <subscription_key> <identification_file_path>'
+    if len(sys.argv) < 4:
+        print('Usage: python IdentifyFile.py <identification_file_path>'
               ' <profile_ids>...')
-        print('\t<subscription_key> is the subscription key for the service')
         print('\t<identification_file_path> is the audio file path for identification')
         print('\t<force_short_audio> True/False waives the recommended minimum audio limit needed '
               'for enrollment')
         print('\t<profile_ids> the profile IDs for the profiles to identify the audio from.')
         sys.exit('Error: Incorrect Usage.')
 
-    identify_file(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4:])
+    subscription_key = GetSubscriptionKey.get_subscription_key()
+
+
+    identify_file(subscription_key, sys.argv[1], sys.argv[2], sys.argv[3:])
