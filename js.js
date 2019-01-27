@@ -27,6 +27,7 @@ var transcriptText = '';
 var speakerName = 'No one';
 var previousSpeakerName = '';
 var globalId = 0;
+var isEnrolling = false;
 
 function stdlib_call(speakerName, text) {
     lib['nickwu241.who-said-what'](speakerName, text, (err, res) => {
@@ -82,6 +83,11 @@ async function transcribe(filename, speakerId) {
             // }
             transcript.push([speakerId, transcription])
         }
+
+        if (isEnrolling) {
+            return;
+        }
+
         transcriptText += transcription;
         speakerName = speakerId;
         previousSpeakerName = speakerId;
@@ -93,6 +99,9 @@ function exec_commands(cmd_record, cmd_identify) {
         if (err) {
             console.error('couldnt execute command', err);
             throw err;
+        }
+        if (isEnrolling) {
+            return;
         }
 
         getSpeakerId();
@@ -147,7 +156,12 @@ app.post('/speakerId', (req, res) => {
 })
 
 app.post('/create/:name', (req, res) => {
-    enroll(req.params.name, () => res.json({ status: 'ok' }));
+    isEnrolling = true;
+    enroll(req.params.name, () => {
+        isEnrolling = false;
+        getSpeakerId();
+        res.json({ status: 'ok' })
+    });
 })
 
 app.get('/transcript', (req, res) => {
@@ -156,5 +170,5 @@ app.get('/transcript', (req, res) => {
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
-    // getSpeakerId();
+    getSpeakerId();
 });
