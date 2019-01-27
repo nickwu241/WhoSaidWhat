@@ -23,7 +23,7 @@
 
                 <div v-for="item in transcript">
                     <!-- TODO: CHANGE COLOUR -->
-                    <div class="speech">
+                    <div :class="{'speech': true, 'MickeyMouse': item[0] === 'MickeyMouse', 'Jimmy': item[0] === 'Jimmy', 'Sorina': item[0] === 'Sorina'}">
                         {{ item[0] }}: {{item[1]}}
                         <div class="timestamp">
                             {{ item[2] }}
