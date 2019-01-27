@@ -38,9 +38,24 @@
                     <div v-if="currentSpeaker">
                         {{currentSpeaker}} is speaking.
                     </div>
-                    <button type="button" class="btn btn-primary">Add New User</button>
+                    <button type="button" class="btn btn-primary" id="myBtn">Add New User</button>
                 </div>
                 <div style="clear:both"></div>
+            </div>
+
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="d-flex">
+                            <p>Enter Speaker Name...</p>
+                            <div class="ml-auto p-2">
+                                <button type="button" class="btn btn-primary" id="recordButton">Start Recording</button>
+                            </div>
+                            
+                        </div>
+                        <input> </input>
+                </div>
             </div>
         </div>
     </div>
