@@ -34,6 +34,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import IdentificationServiceHttpClientHelper
 import GetSubscriptionKey
 import sys
+import json
 
 def identify_file(subscription_key, file_path, force_short_audio, profile_ids):
     """Identify an audio file on the server.
@@ -51,7 +52,14 @@ def identify_file(subscription_key, file_path, force_short_audio, profile_ids):
         file_path, profile_ids,
         force_short_audio.lower() == "true")
 
-    print('Identified Speaker = {0}'.format(identification_response.get_identified_profile_id()))
+    mapping = {
+        "03f5cadf-309f-4228-8390-05007eb83ece": "Jimmy",
+        "cd74bc8f-71c5-46cf-82d6-9f3f30dadc30": "Nick",
+        "5d545b81-a3d9-4ea7-be55-aba94c7c1a05": "Sorina",
+        "157e954b-6fe7-4d96-a9ac-f1135521e9fa": "Mickey Mouse"
+    }
+
+    print('Identified Speaker = {0}'.format(mapping.get(identification_response.get_identified_profile_id(),"Unknown")))
     print('Confidence = {0}'.format(identification_response.get_confidence()))
 
 if __name__ == "__main__":
