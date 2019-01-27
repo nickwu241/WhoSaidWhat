@@ -35,6 +35,7 @@ var app = new Vue({
             })
         },
         create() {
+            console.log('enrolling', this.inputText)
             if (this.inputText === '') {
                 return;
             }
