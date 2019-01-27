@@ -1,0 +1,56 @@
+body{
+    font-family: Georgia;
+}
+
+#container {
+    height: 90vh;
+    width:99vw;
+    bottom:0;
+    position: absolute;
+    
+
+}
+
+.bodies {
+    width: 50%;
+    height: 100%;
+    position: relative;
+}
+
+#first {
+
+    float:left;
+}
+
+#second {
+    text-align: center;
+
+    float:right;
+}
+
+#transcriptBox {
+    padding:20px;
+    border-top-left-radius:30px;
+    border-top-right-radius:30px;
+    overflow-y:auto;
+    position: absolute;
+    bottom:0;
+    right:0;
+    width:43vw;
+    height:80vh;
+    background-color:lightblue;
+}
+
+#title {
+    font-size:4em;
+}
+
+#talker {
+    width:200px;
+    font-size:3em;
+    position: absolute;             
+    top: 50%;                         
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+}
