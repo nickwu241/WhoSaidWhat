@@ -34,8 +34,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import IdentificationServiceHttpClientHelper
 import GetSubscriptionKey
 import sys
+import json
 
-def enroll_profile(subscription_key, profile_id, file_path, force_short_audio):
+def enroll_profile(subscription_key, profile_id, file_path, force_short_audio, name):
     """Enrolls a profile on the server.
 
     Arguments:
@@ -57,15 +58,26 @@ def enroll_profile(subscription_key, profile_id, file_path, force_short_audio):
     print('Speech Time = {0}'.format(enrollment_response.get_speech_time()))
     print('Enrollment Status = {0}'.format(enrollment_response.get_enrollment_status()))
 
+    # TODO: Fixed the absolute path to use os.path
+    with open('./Identification/mapping.json') as data_file:
+        data = json.load(data_file)
+
+        data[profile_id] = name
+
+    # TODO: Fixed the absolute path to use os.path
+    with open('./Identification/mapping.json', 'w') as data_file:
+        json.dump(data, data_file, indent=4)
+
 if __name__ == "__main__":
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 5:
         print('\t<profile_id> is the profile ID of the profile to enroll')
         print('\t<enrollment_file_path> is the enrollment audio file path')
         print('\t<force_short_audio> True/False waives the recommended minimum audio limit needed '
               'for enrollment')
+        print('\t<name> name to register with the profile_id in mapping.json')
 
         sys.exit('Error: Incorrect Usage.')
 
     subscription_key = GetSubscriptionKey.get_subscription_key()
 
-    enroll_profile(subscription_key ,sys.argv[1], sys.argv[2], sys.argv[3])
+    enroll_profile(subscription_key ,sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

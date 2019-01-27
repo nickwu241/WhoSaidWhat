@@ -22,7 +22,8 @@ const languageCode = 'en-US';
 const app = express();
 
 const port = process.env.port || 8080;
-var transcript = '';
+var transcript = [];
+var transcriptText = '';
 var speakerName = 'No one';
 var previousSpeakerName = '';
 var globalId = 0;
@@ -73,12 +74,15 @@ async function transcribe(filename, speakerId) {
         console.log(`Transcription: `, transcription);
         if (previousSpeakerName === speakerId) {
             // Keep speech buble.
-            transcript += transcription;
+            transcript[transcript.length - 1][1] += transcription
         } else {
             // Create new speech buble.
-            transcript += transcription;
-            stdlib_call(previousSpeakerName, transcription);
+            // if (transcript.length > 0) {
+            //     stdlib_call(previousSpeakerName, transcript[transcript.length - 1]);
+            // }
+            transcript.push([speakerId, transcription])
         }
+        transcriptText += transcription;
         speakerName = speakerId;
         previousSpeakerName = speakerId;
     });
@@ -109,27 +113,30 @@ function exec_commands(cmd_record, cmd_identify) {
 }
 
 function getSpeakerId() {
+    enroll_time = 3
     console.log("listening to user voice")
     filename = `output_${globalId}.wav`
     globalId++
-    cmd_record = `sox -b 16 -r 16k -c 1 -d ${filename} trim 0 6`
-    cmd_identify = `./Identification/IdentifyFile.py ${filename} True 03f5cadf-309f-4228-8390-05007eb83ece 5d545b81-a3d9-4ea7-be55-aba94c7c1a05 cd74bc8f-71c5-46cf-82d6-9f3f30dadc30 157e954b-6fe7-4d96-a9ac-f1135521e9fa`
+    cmd_record = `sox -b 16 -r 16k -c 1 -d ${filename} trim 0 ${enroll_time}`
+    cmd_identify = `./Identification/IdentifyFile.py ${filename} True`
     exec_commands(cmd_record, cmd_identify);
 }
 
-function enroll(name) {
+function enroll(name, callback) {
+    enroll_time = 10
     console.log("Enrolling... ", name)
-    cmd_create = '(prof_id=$(./Identification/CreateProfile.py); ./Identification/EnrollProfile.py ${prof_id} enroll.wav True ' + name
-    cmd_enroll = `sox -b 16 -r 16k -c 1 -d enroll.wav trim 0 10 && ${cmd_create}`
+    cmd_create = '(prof_id=$(./Identification/CreateProfile.py); ./Identification/EnrollProfile.py ${prof_id} enroll.wav True ' + name + ')'
+    cmd_enroll = `sox -b 16 -r 16k -c 1 -d enroll.wav trim 0 ${enroll_time} && ${cmd_create}`
     exec(cmd_enroll, (err, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
         console.log(`stderr: ${stderr}`);
+        callback();
     });
 }
 
 app.get('/', (req, res) => {
     res.render('index.hbs', {
-        transcript: transcript,
+        transcript: transcriptText,
         name: speakerName
     });
 });
@@ -140,12 +147,14 @@ app.post('/speakerId', (req, res) => {
 })
 
 app.post('/create/:name', (req, res) => {
-    enroll(req.params.name);
-    res.json({ status: 'ok' })
+    enroll(req.params.name, () => res.json({ status: 'ok' }));
+})
+
+app.get('/transcript', (req, res) => {
+    res.json(transcript);
 })
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
-    // setInterval(getSpeakerId, 10000)
     // getSpeakerId();
 });
