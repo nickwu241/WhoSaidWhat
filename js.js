@@ -19,8 +19,9 @@ const languageCode = 'en-US';
 const app = express();
 
 const port = process.env.port || 8080;
-var tra = '';
-var na = '';
+var transcript = '';
+var speakerName = 'No one';
+var previousSpeakerName = '';
 var globalId = 0;
 
 function sendRequest() {
@@ -28,14 +29,12 @@ function sendRequest() {
         .then(response => response.json())
         .then(json => {
             data = json[Math.floor(Math.random() * 100) + 1];
-            tra += data.title;
-            na = data.userId;
+            transcript += data.title;
+            speakerName = data.userId;
         })
 }
 
-async function transcribe(filename) {
-
-
+async function transcribe(filename, speakerId) {
     const config = {
         encoding: encoding,
         sampleRateHertz: sampleRateHertz,
@@ -56,7 +55,14 @@ async function transcribe(filename) {
         .map(result => result.alternatives[0].transcript)
         .join('\n');
     console.log(`Transcription: `, transcription);
-    tra += transcription;
+    if (previousSpeakerName === speakerId) {
+        // Keep speech buble.
+    } else {
+        // Create new speech buble.
+        transcript += transcription;
+    }
+    speakerName = speakerId;
+    previousSpeakerName = speakerId;
 }
 
 function getSpeakerId() {
@@ -81,20 +87,16 @@ function getSpeakerId() {
             var lines = stdout1.split('\n')
             var speakerId = lines[0].split('=')[1].trim()
             var confidence = lines[1].split('=')[1].trim()
-            na = speakerId;
-            transcribe(filename);
+            transcribe(filename, speakerId);
             getSpeakerId();
         });
-        // the *entire* stdout and stderr (buffered)
-        console.log(`stdout: ${stdout}`);
-        console.log(`stderr: ${stderr}`);
     });
 }
 
 app.get('/', (req, res) => {
     res.render('index.hbs', {
-        transcript: tra,
-        name: na
+        transcript: transcript,
+        name: speakerName
     });
 });
 
