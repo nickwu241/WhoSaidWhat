@@ -9,6 +9,7 @@ const { exec } = require('child_process');
 
 // Import stdlib
 const lib = require('lib');
+const sms = lib.utils.sms['@1.0.9'];
 
 // Imports the Google Cloud client library
 const speech = require('@google-cloud/speech');
@@ -97,6 +98,10 @@ async function transcribe(filename, speakerId) {
 
         }
 
+        if (transcription.contains('unlock') && speakerId === 'Jimmy') {
+            sms();
+        }
+
         if (isEnrolling) {
             return;
         }
@@ -153,6 +158,15 @@ function enroll(name, callback) {
         console.log(`stdout: ${stdout}`);
         console.log(`stderr: ${stderr}`);
         callback();
+    });
+}
+
+function sms() {
+    var number = '7783165948';
+    var text = 'Door unlocked.';
+    sms({
+        to: number, // (required)
+        body: text // (required)
     });
 }
 
