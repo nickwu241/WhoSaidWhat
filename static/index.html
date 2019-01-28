@@ -22,18 +22,9 @@
                 <button type="button" class="btn btn-success" @click="this.export">Export</button>
             </div>
         </nav>
-        <!-- <div class="d-flex">
-            <div id="title">Who Said What</div>
-            <div class="ml-auto p-2">
-                <button type="button" class="btn btn-success" @click="this.export">Export</button>
-            </div>
-        </div> -->
-
         <div id="all">
             <div class="bodies" id="first">
-
                 <div v-for="item in transcript">
-                    <!-- TODO: CHANGE COLOUR -->
                     <div :class="{'speech': true, 'MickeyMouse': item[0] === 'MickeyMouse', 'Jimmy': item[0] === 'Jimmy', 'Sorina': item[0] === 'Sorina'}">
                         {{ item[0] }}: {{item[1]}}
                     </div>
