@@ -1,5 +1,10 @@
-# WhoSaidWhat
+# Who Said What
 <img src="./assets/whosaidwhat.png" alt="logo" height="200" width="200">
+
+`Who said What` is a server application [created at nwHacks 2019](https://devpost.com/software/who-said-what-xj9tuz) by
+- [Jimmy Huang](https://jimmyhuang0904.github.io/)
+- [Nicholas Wu](https://nickwu241.github.io)
+- [Sorina Chirhei](https://github.com/schirhei)
 
 **Problem**:
 Remote confrence calls usually involves multiple people on one side using the same device,
@@ -35,7 +40,7 @@ Running the app requires:
 
 To run the app:
 ```
-node index.js
+node js.js
 ```
 
 ### Set Azure Subscription Key with Environment Variable
@@ -54,6 +59,3 @@ ef55fc9b-8460-4714-a238-688426f5d5b5 - Jimmy
 15b130f8-afe2-405f-80e1-311db85cd29e - Sorina
 0af25686-240b-4054-8821-305ef4a2502c - MickeyMouse
 ```
-
-## nwHacks 2019 Submission
-Who Said What was created at nwHacks 2019, [check out the submission](https://devpost.com/software/who-said-what-xj9tuz).
