@@ -1,6 +1,6 @@
 const fs = require('fs');
 const readline = require('readline');
-const {google} = require('googleapis');
+const { google } = require('googleapis');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -25,9 +25,9 @@ function writeToSheets(data) {
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback, data) {
-  const {client_secret, client_id, redirect_uris} = credentials.installed;
+  const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
-      client_id, client_secret, redirect_uris[0]);
+    client_id, client_secret, redirect_uris[0]);
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
@@ -69,13 +69,13 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 function write(auth, data) {
-  const sheets = google.sheets({version: 'v4', auth});
+  const sheets = google.sheets({ version: 'v4', auth });
   let spreadsheetId = '1C8VwFy3aHMZDNpzkPkBKsMzai36_LbXxfl8x6BC0wSY'
-  let range = 'A:B'
+  let range = 'A:C'
   let valueInputOption = 'RAW'
   let values = [
     [
-        'Speaker Name', 'Transcribed Text'
+      'Speaker Name', 'Transcribed Text', 'Timestamp'
     ],
     ...data
   ];

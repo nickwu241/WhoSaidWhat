@@ -3,7 +3,7 @@
 
 <head>
     <title>Who Said What</title>
-    <link rel="shortcut icon" type="image/png" href="/assets/whosaidwhat.png"/>
+    <link rel="shortcut icon" type="image/png" href="/assets/whosaidwhat.png" />
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -18,7 +18,7 @@
                 Who Said What
             </a>
             <div class="ml-auto p-2">
-                <button type="button" class="btn btn-primary" id="myBtn" >Add New User</button>
+                <button type="button" class="btn btn-primary" id="myBtn">Add New User</button>
                 <button type="button" class="btn btn-success" @click="this.export">Export</button>
             </div>
         </nav>
@@ -36,9 +36,6 @@
                     <!-- TODO: CHANGE COLOUR -->
                     <div :class="{'speech': true, 'MickeyMouse': item[0] === 'MickeyMouse', 'Jimmy': item[0] === 'Jimmy', 'Sorina': item[0] === 'Sorina'}">
                         {{ item[0] }}: {{item[1]}}
-                        <div class="timestamp">
-                            {{ item[2] }}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -56,7 +53,8 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <input class="m-2" v-model.trim="inputText" placeholder="Speaker Name">
-                    <button type="button" class="m-2 btn btn-primary" id="recordButton" @click="this.create">Start Recording</button>
+                    <button type="button" class="m-2 btn btn-primary" id="recordButton" @click="this.create">Start
+                        Recording</button>
                 </div>
             </div>
         </div>
