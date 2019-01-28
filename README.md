@@ -21,7 +21,7 @@ When the meeting ends, our app can also export the meeting minutes (log of who s
 - export transcription to cloud storage such as `Google Sheets`
 
 **Bonus security feature**:
-- authenticate a speaker via voice and send a verification code only if the speaker is authorized.
+- authenticate a speaker via voice and send a verification code only if the speaker is authorized
 
 How does this work? For example:
 1. A supervisor needs to enter a restricted room
@@ -59,3 +59,6 @@ ef55fc9b-8460-4714-a238-688426f5d5b5 - Jimmy
 15b130f8-afe2-405f-80e1-311db85cd29e - Sorina
 0af25686-240b-4054-8821-305ef4a2502c - MickeyMouse
 ```
+
+### Enrolling Speech to Profile
+[Read phrases from here](https://didyouknowfacts.com/7-random-facts-something-say/).
