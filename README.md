@@ -1,5 +1,5 @@
 # Who Said What
-<img src="./assets/whosaidwhat.png" alt="logo" height="200" width="200">
+<img src="./assets/whosaidwhat.png" alt="logo" height="300" width="300">
 
 `Who said What` is a server application [created at nwHacks 2019](https://devpost.com/software/who-said-what-xj9tuz) by
 - [Jimmy Huang](https://jimmyhuang0904.github.io/)
@@ -7,15 +7,17 @@
 - [Sorina Chirhei](https://github.com/schirhei)
 
 **Problem**:
-Remote conference calls usually involves multiple people on one side using the same device,
-and the other side can only detect when that device is speaking, not who is speaking nor what the speaker's role is.
+At work, conference calls usually involves multiple people on one side using the same microphone.
+It may be hard to know who's speaking and what their role is.
+Furthermore, some details of the meeting can be lost and it's tedious to note everything down.
 
 **Solution**:
-Our app distinguishes/recognizes speakers and automatically transcribe the meeting in real time.
+Our app distinguishes/recognizes speakers, shows who's speaking and automatically transcribe the meeting in real time.
 When the meeting ends, our app can also export the meeting minutes (log of who said what at what time).
 
 **Features**:
-- display who is currently speaking using speaker recognition
+- display who's currently speaking using speaker recognition
+- transcribe what's being said by who like a chat application
 - create and train a new speaker profile within 15 seconds
 - stream transcription to services such as `Slack`
 - export transcription to cloud storage such as `Google Sheets`
@@ -28,6 +30,19 @@ How does this work? For example:
 2. They say "unlock the door"
 3. Our app will verify the voice and check that they have sufficient permissions
 4. Finally, the supervisor's phone will receive a SMS verification code that can be used to unlock the door
+
+## Technologies Used
+We used
+- Microsoft Speech Recognition API
+- Microsoft Speech to Text API
+- Google Cloud Speech to Text API
+- Google Sheets API
+- Slack API
+- stdlib for integrating services for the backend such as Slack and SMS
+- NodeJS with Express for the backend
+- Vue for the frontend
+- Python scripts for accessing Microsoft's APIs
+- Love ❤️
 
 ## Development
 Running the app requires:
@@ -60,5 +75,7 @@ ef55fc9b-8460-4714-a238-688426f5d5b5 - Jimmy
 0af25686-240b-4054-8821-305ef4a2502c - MickeyMouse
 ```
 
-### Enrolling Speech to Profile
-[Read phrases from here](https://didyouknowfacts.com/7-random-facts-something-say/).
+### Creating a new speaker profile
+Use our application OR `./Identification/CreateProfile.py` and `./Identification/EnrollProfile.py`.
+
+Get the speaker to [read phrases from here](https://didyouknowfacts.com/7-random-facts-something-say/).
