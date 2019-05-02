@@ -108,7 +108,7 @@ body {
 }
 
 .sorina {
-    background-image: url('./assets/sorina.png');
+    background-image: url('./assets/sorina.jpg');
 }
 
 /* Speech Bubble Colours */
@@ -123,17 +123,17 @@ body {
 }
 
 .Jimmy {
-    background-color: #ce9fc5;
+    background-color: #8d6385;
 }
 .Sorina {
-    background-color: #63c7b2;
+    background-color: #4a8d7f;
 }
 .MickeyMouse {
-    background-color: #80ced7;
+    background-color: #528d94;
 }
 
 .Unknown {
-    background-color: #ccdbdc;
+    background-color: #738383;
 }
 
 #buttonContainer {

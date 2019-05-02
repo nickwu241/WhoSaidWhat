@@ -5,8 +5,8 @@
     <title>Who Said What</title>
     <link rel="shortcut icon" type="image/png" href="/assets/whosaidwhat.png" />
     <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 </head>
 
@@ -25,7 +25,8 @@
         <div id="all">
             <div class="bodies" id="first">
                 <div v-for="item in transcript">
-                    <div :class="{'speech': true, 'MickeyMouse': item[0] === 'MickeyMouse', 'Jimmy': item[0] === 'Jimmy', 'Sorina': item[0] === 'Sorina'}">
+                    <div
+                        :class="{'speech': true, 'MickeyMouse': item[0] === 'MickeyMouse', 'Jimmy': item[0] === 'Jimmy', 'Sorina': item[0] === 'Sorina', 'Unknown': item[0] === 'Unknown'}">
                         {{ item[0] }}: {{item[1]}}
                     </div>
                 </div>
