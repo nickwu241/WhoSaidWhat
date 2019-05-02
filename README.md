@@ -1,5 +1,7 @@
+
 # Who Said What
-<img src="./assets/whosaidwhat.png" alt="logo" height="300" width="300">
+
+<img src="./demo-images/ui_and_export.png" alt="screen" style="border: 1px solid">
 
 `Who said What` is a server application [created at nwHacks 2019](https://devpost.com/software/who-said-what-xj9tuz) by
 - [Jimmy Huang](https://jimmyhuang0904.github.io/)
